@@ -4,6 +4,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
+import fragments.GoalRecyclerViewFragment;
 import single.fragment.activity.SingleFragmentActivity;
 
 public class GoalRecyclerViewActivity extends SingleFragmentActivity {
@@ -11,6 +12,6 @@ public class GoalRecyclerViewActivity extends SingleFragmentActivity {
 
     @Override
     public Fragment getFragment() {
-        return null;
+        return GoalRecyclerViewFragment.newInstance();
     }
 }

@@ -1,6 +1,7 @@
 package database;
 
 import java.util.ArrayList;
+import java.util.UUID;
 
 import model.Goal;
 
@@ -13,6 +14,15 @@ public class GoalDatabase {
     private ArrayList<Goal> goals;
 
 
+    public Goal findGoal(UUID uuid) {
+        for(Goal g: goals) {
+            if(g.getUuid().equals(uuid)){
+                return g;
+            }
+        }
+        return null;
+    }
+
     public static GoalDatabase newInstance() {
         if(goalDatabase == null) {
             goalDatabase = new GoalDatabase();
@@ -22,7 +32,8 @@ public class GoalDatabase {
 
     private GoalDatabase() {
         goals = new ArrayList<>();
-        goals.add(new Goal("Test","test",false));
+        for(int i= 0; i < 22; i++)
+        goals.add(new Goal("Goal "+i,"test",false));
     }
 
     public ArrayList<Goal> getGoals() {
