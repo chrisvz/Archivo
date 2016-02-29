@@ -28,5 +28,5 @@ public class GoalDatabase {
     public ArrayList<Goal> getGoals() {
         return goals;
     }
-    
+
 }
