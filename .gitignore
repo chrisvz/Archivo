@@ -35,3 +35,9 @@ captures/
 # Intellij
 *.iml
 
+settings.gradle
+gradlew.bat
+gradlew
+.idea/
+gradle.properties
+gradle
