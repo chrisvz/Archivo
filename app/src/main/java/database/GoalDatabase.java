@@ -33,7 +33,7 @@ public class GoalDatabase {
     private GoalDatabase() {
         goals = new ArrayList<>();
         for(int i= 0; i < 22; i++)
-        goals.add(new Goal("Goal "+i,"test",false));
+        goals.add(new Goal("Goal "+i,"My goal for today is to be a very nice person and get a really hot girl",false));
     }
 
     public ArrayList<Goal> getGoals() {

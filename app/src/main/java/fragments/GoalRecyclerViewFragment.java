@@ -1,8 +1,8 @@
 package fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -11,9 +11,9 @@ import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.TextView;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
+import achivo.com.achivo.GoalDetailViewActivity;
 import achivo.com.achivo.R;
 import database.GoalDatabase;
 import model.Goal;
@@ -24,8 +24,6 @@ import model.Goal;
 public class GoalRecyclerViewFragment extends Fragment {
 
     private RecyclerView recyclerView;
-
-
 
     public View onCreateView(LayoutInflater layoutInflater,ViewGroup container,Bundle savedInstanceState) {
 
@@ -49,26 +47,34 @@ public class GoalRecyclerViewFragment extends Fragment {
 
     public static GoalRecyclerViewFragment newInstance() {
         return new GoalRecyclerViewFragment();
-    }
+    };
 
-    private class GoalHolder extends RecyclerView.ViewHolder {
+    private class GoalHolder extends RecyclerView.ViewHolder implements RecyclerView.OnClickListener{
 
         private CheckBox successfulCheckBox;
         private TextView titleTextView;
+        private Goal goal;
 
         public GoalHolder(View itemView) {
             super(itemView);
 
             successfulCheckBox = (CheckBox)itemView.findViewById(R.id.successful_checkbox);
             titleTextView = (TextView)itemView.findViewById(R.id.title_text_view);
+            itemView.setOnClickListener(this);
         }
 
+
         private void bind(Goal goal) {
-
+            this.goal = goal;
             successfulCheckBox.setChecked(goal.isSuccessful());
-
             titleTextView.setText(goal.getTitle());
+        }
 
+        @Override
+        public void onClick(View v) {
+
+            Intent intent = GoalDetailViewActivity.getIntent(goal.getUuid(),getActivity());
+            startActivity(intent);
         }
     }
 
