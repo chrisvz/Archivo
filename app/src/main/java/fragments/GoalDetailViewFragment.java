@@ -80,7 +80,6 @@ public class GoalDetailViewFragment extends Fragment {
 
             @Override
             public void afterTextChanged(Editable s) {
-
             }
         });
 

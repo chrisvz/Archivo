@@ -19,6 +19,10 @@ public class Goal {
         uuid = UUID.randomUUID();
     }
 
+    public Goal(){
+        uuid = UUID.randomUUID();
+    }
+
     public void setTitle(String title) {
         this.title = title;
     }

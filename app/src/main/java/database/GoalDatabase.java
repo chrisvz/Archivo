@@ -30,6 +30,10 @@ public class GoalDatabase {
         return goalDatabase;
     }
 
+    public void addGoal(Goal g){
+        goals.add(g);
+    }
+
     private GoalDatabase() {
         goals = new ArrayList<>();
         for(int i= 0; i < 22; i++)

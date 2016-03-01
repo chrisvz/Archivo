@@ -8,6 +8,7 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AppCompatActivity;
 
 import java.util.ArrayList;
 import java.util.UUID;
@@ -19,7 +20,7 @@ import model.Goal;
 /**
  * Created by Chris on 3/1/2016.
  */
-public class GoalViewPagerActivity extends FragmentActivity {
+public class GoalViewPagerActivity extends AppCompatActivity{
 
     private static final String UUID = "UUID";
     private UUID uuid;

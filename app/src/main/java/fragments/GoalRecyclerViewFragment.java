@@ -6,6 +6,9 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
@@ -26,9 +29,39 @@ import model.Goal;
 public class GoalRecyclerViewFragment extends Fragment {
 
     private RecyclerView recyclerView;
-    private  GoalAdapter goalAdapter;
+    private GoalAdapter goalAdapter;
+
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.goal_recycler_view_fragment,menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch (item.getItemId()) {
+            case R.id.menu_item_new_goal:
+                GoalDatabase goalDatabase = GoalDatabase.newInstance();
+                Goal goal = new Goal();
+                goalDatabase.addGoal(goal);
+                Intent intent = GoalViewPagerActivity.getIntent(goal.getUuid(), getActivity());
+                startActivity(intent);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
+    }
 
     public View onCreateView(LayoutInflater layoutInflater,ViewGroup container,Bundle savedInstanceState) {
+
 
         View v = layoutInflater.inflate(R.layout.goal_recycler_view_fragment, container, false);
         recyclerView = (RecyclerView)v.findViewById(R.id.goal_recycler_view);
@@ -66,6 +99,7 @@ public class GoalRecyclerViewFragment extends Fragment {
         private TextView titleTextView;
         private Goal goal;
 
+
         public GoalHolder(View itemView) {
             super(itemView);
 
@@ -83,19 +117,19 @@ public class GoalRecyclerViewFragment extends Fragment {
         }
 
 
-        private void bind(Goal goal) {
-            this.goal = goal;
+        private void bind(Goal mGoal) {
+            goal = mGoal;
             successfulCheckBox.setChecked(goal.isSuccessful());
             titleTextView.setText(goal.getTitle());
         }
 
         @Override
         public void onClick(View v) {
-
-            Intent intent = GoalViewPagerActivity.getIntent(goal.getUuid(),getActivity());
+            Intent intent = GoalViewPagerActivity.getIntent(goal.getUuid(), getActivity());
             startActivity(intent);
         }
     }
+
 
     private class GoalAdapter extends RecyclerView.Adapter<GoalHolder> {
 
