@@ -6,6 +6,9 @@ import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
@@ -31,6 +34,24 @@ public class GoalDetailViewFragment extends Fragment {
     private EditText descriptionEditText;
     private CheckBox successfulCheckBox;
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch(item.getItemId()) {
+            case R.id.menu_item_delete_goal:
+                GoalDatabase goalDatabase = GoalDatabase.newInstance();
+                goalDatabase.delete(goal);
+                getActivity().finish();
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.goal_detail_view_fragment,menu);
+    }
+
     public static GoalDetailViewFragment newInstance(UUID uuid) {
 
         Bundle bundle = new Bundle();
@@ -44,6 +65,7 @@ public class GoalDetailViewFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
 
         GoalDatabase goalDatabase = GoalDatabase.newInstance();
         uuid = (UUID)getArguments().getSerializable(UUID);

@@ -44,4 +44,7 @@ public class GoalDatabase {
         return goals;
     }
 
+    public void delete(Goal goal) {
+        goals.remove(goal);
+    }
 }

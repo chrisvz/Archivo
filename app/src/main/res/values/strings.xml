@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">Achivo</string>
     <string name="add_goal">Add goal</string>
+    <string name="delete_goal">delete</string>
 </resources>

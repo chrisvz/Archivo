@@ -49,6 +49,7 @@ public class GoalRecyclerViewFragment extends Fragment {
                 Intent intent = GoalViewPagerActivity.getIntent(goal.getUuid(), getActivity());
                 startActivity(intent);
                 return true;
+
             default:
                 return super.onOptionsItemSelected(item);
         }
