@@ -14,6 +14,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import achivo.com.achivo.GoalDetailViewActivity;
+import achivo.com.achivo.GoalViewPagerActivity;
 import achivo.com.achivo.R;
 import database.GoalDatabase;
 import model.Goal;
@@ -73,7 +74,7 @@ public class GoalRecyclerViewFragment extends Fragment {
         @Override
         public void onClick(View v) {
 
-            Intent intent = GoalDetailViewActivity.getIntent(goal.getUuid(),getActivity());
+            Intent intent = GoalViewPagerActivity.getIntent(goal.getUuid(),getActivity());
             startActivity(intent);
         }
     }
