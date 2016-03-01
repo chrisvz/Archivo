@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -25,6 +26,7 @@ import model.Goal;
 public class GoalRecyclerViewFragment extends Fragment {
 
     private RecyclerView recyclerView;
+    private  GoalAdapter goalAdapter;
 
     public View onCreateView(LayoutInflater layoutInflater,ViewGroup container,Bundle savedInstanceState) {
 
@@ -40,11 +42,19 @@ public class GoalRecyclerViewFragment extends Fragment {
     private void updateUI() {
         GoalDatabase goalDatabase = GoalDatabase.newInstance();
         ArrayList<Goal> goals = goalDatabase.getGoals();
-        GoalAdapter goalAdapter = new GoalAdapter(goals);
+        goalAdapter = new GoalAdapter(goals);
         recyclerView.setAdapter(goalAdapter);
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
 
+
+        if(goalAdapter != null)
+        goalAdapter.notifyDataSetChanged();
+
+    }
 
     public static GoalRecyclerViewFragment newInstance() {
         return new GoalRecyclerViewFragment();
@@ -62,6 +72,14 @@ public class GoalRecyclerViewFragment extends Fragment {
             successfulCheckBox = (CheckBox)itemView.findViewById(R.id.successful_checkbox);
             titleTextView = (TextView)itemView.findViewById(R.id.title_text_view);
             itemView.setOnClickListener(this);
+
+            successfulCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    goal.setSuccessful(isChecked);
+                }
+            });
+
         }
 
 
@@ -96,6 +114,7 @@ public class GoalRecyclerViewFragment extends Fragment {
         public void onBindViewHolder(GoalHolder holder, int position) {
             Goal goal = goals.get(position);
             holder.bind(goal);
+
         }
 
         @Override
