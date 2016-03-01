@@ -4,12 +4,12 @@
     android:layout_height="match_parent"
     android:weightSum="1">
 
-    <TextView
+    <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="Title"
-        android:id="@+id/title_text_view_detail"
+        android:id="@+id/title_edit_text_detail"
         android:layout_gravity="center_horizontal" />
 
     <CheckBox
@@ -20,11 +20,11 @@
         android:layout_weight="0.04"
         android:checked="false" />
 
-    <TextView
+    <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="description"
-        android:id="@+id/description_text_view_detail"
+        android:id="@+id/description_edit_text_detail"
         android:layout_weight="0.43" />
 </LinearLayout>

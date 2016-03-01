@@ -32,7 +32,7 @@ public class GoalViewPagerActivity extends FragmentActivity {
         intent.putExtra(UUID,uuid);
         return intent;
     }
-    
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.goal_view_pager);

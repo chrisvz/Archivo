@@ -3,12 +3,11 @@ package fragments;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
-import android.widget.TextView;
+import android.widget.EditText;
 
 import java.util.UUID;
 
@@ -25,8 +24,8 @@ public class GoalDetailViewFragment extends Fragment {
     private Goal goal;
     private UUID uuid;
 
-    private TextView titleTextView;
-    private TextView descriptionTextView;
+    private EditText titleEditText;
+    private EditText descriptionEditText;
     private CheckBox successfulCheckBox;
 
     public static GoalDetailViewFragment newInstance(UUID uuid) {
@@ -55,12 +54,12 @@ public class GoalDetailViewFragment extends Fragment {
         super.onCreateView(inflater, container, savedInstanceState);
         View v = inflater.inflate(R.layout.goal_detail_view_fragment,container,false);
 
-        titleTextView = (TextView)v.findViewById(R.id.title_text_view_detail);
-        descriptionTextView = (TextView)v.findViewById(R.id.description_text_view_detail);
+        titleEditText = (EditText)v.findViewById(R.id.title_edit_text_detail);
+        descriptionEditText = (EditText)v.findViewById(R.id.description_edit_text_detail);
         successfulCheckBox = (CheckBox)v.findViewById(R.id.successful_checkBox_detail);
 
-        titleTextView.setText(goal.getTitle());
-        descriptionTextView.setText(goal.getDescription());
+        titleEditText.setText(goal.getTitle());
+        descriptionEditText.setText(goal.getDescription());
         successfulCheckBox.setChecked(goal.isSuccessful());
         return v;
     }
