@@ -1,5 +1,8 @@
 package database;
 
+import android.content.Context;
+import android.database.sqlite.SQLiteDatabase;
+
 import java.util.ArrayList;
 import java.util.UUID;
 
@@ -13,6 +16,9 @@ public class GoalDatabase {
     private static GoalDatabase goalDatabase;
     private ArrayList<Goal> goals;
 
+    private Context mContext;
+    private SQLiteDatabase mDatabase;
+
 
     public Goal findGoal(UUID uuid) {
         for(Goal g: goals) {
@@ -23,9 +29,9 @@ public class GoalDatabase {
         return null;
     }
 
-    public static GoalDatabase newInstance() {
+    public static GoalDatabase newInstance(Context context) {
         if(goalDatabase == null) {
-            goalDatabase = new GoalDatabase();
+            goalDatabase = new GoalDatabase(context);
         }
         return goalDatabase;
     }
@@ -34,10 +40,9 @@ public class GoalDatabase {
         goals.add(g);
     }
 
-    private GoalDatabase() {
-        goals = new ArrayList<>();
-        for(int i= 0; i < 22; i++)
-        goals.add(new Goal("Goal "+i,"My goal for today is to be a very nice person and get a really hot girl",false));
+    private GoalDatabase(Context context) {
+        mContext = context;
+        mDatabase = new GoalDbHelper(mContext).getWritableDatabase();
     }
 
     public ArrayList<Goal> getGoals() {

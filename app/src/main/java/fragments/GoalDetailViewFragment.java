@@ -39,7 +39,7 @@ public class GoalDetailViewFragment extends Fragment {
 
         switch(item.getItemId()) {
             case R.id.menu_item_delete_goal:
-                GoalDatabase goalDatabase = GoalDatabase.newInstance();
+                GoalDatabase goalDatabase = GoalDatabase.newInstance(getActivity());
                 goalDatabase.delete(goal);
                 getActivity().finish();
         }
@@ -67,7 +67,7 @@ public class GoalDetailViewFragment extends Fragment {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
 
-        GoalDatabase goalDatabase = GoalDatabase.newInstance();
+        GoalDatabase goalDatabase = GoalDatabase.newInstance(getActivity());
         uuid = (UUID)getArguments().getSerializable(UUID);
         goal = goalDatabase.findGoal(uuid);
 

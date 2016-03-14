@@ -43,7 +43,7 @@ public class GoalRecyclerViewFragment extends Fragment {
 
         switch (item.getItemId()) {
             case R.id.menu_item_new_goal:
-                GoalDatabase goalDatabase = GoalDatabase.newInstance();
+                GoalDatabase goalDatabase = GoalDatabase.newInstance(getActivity());
                 Goal goal = new Goal();
                 goalDatabase.addGoal(goal);
                 Intent intent = GoalViewPagerActivity.getIntent(goal.getUuid(), getActivity());
@@ -74,7 +74,7 @@ public class GoalRecyclerViewFragment extends Fragment {
     }
 
     private void updateUI() {
-        GoalDatabase goalDatabase = GoalDatabase.newInstance();
+        GoalDatabase goalDatabase = GoalDatabase.newInstance(getActivity());
         ArrayList<Goal> goals = goalDatabase.getGoals();
         goalAdapter = new GoalAdapter(goals);
         recyclerView.setAdapter(goalAdapter);

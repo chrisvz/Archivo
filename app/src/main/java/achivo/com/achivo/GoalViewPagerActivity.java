@@ -40,7 +40,7 @@ public class GoalViewPagerActivity extends AppCompatActivity{
 
         uuid = (UUID)getIntent().getSerializableExtra(UUID);
 
-        GoalDatabase goalDatabase = GoalDatabase.newInstance();
+        GoalDatabase goalDatabase = GoalDatabase.newInstance(getApplicationContext());
         goals = goalDatabase.getGoals();
 
         viewPager = (ViewPager)findViewById(R.id.goal_view_pager);
