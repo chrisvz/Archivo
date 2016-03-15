@@ -2,34 +2,39 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:weightSum="1">
+    >
 
     <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+
+        android:maxLength="17"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="Title"
-        android:hint="Enter the title "
-
-        android:singleLine="true"
+        android:hint="title"
+        android:layout_weight="1"
         android:id="@+id/title_edit_text_detail"
-        android:layout_gravity="center_horizontal" />
-
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:hint="Enter the description "
-        android:text="description"
-        android:id="@+id/description_edit_text_detail" />
+        />
 
     <CheckBox
+        android:layout_weight = "1"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:text="successful"
         android:id="@+id/successful_checkBox_detail"
-        android:layout_weight="0.04"
         android:checked="false" />
+
+    <EditText
+
+        android:gravity="top|left"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight = "9"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:hint="Write your goal "
+        android:text="description"
+        android:id="@+id/description_edit_text_detail" />
 
 
 </LinearLayout>

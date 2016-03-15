@@ -129,7 +129,6 @@ public class GoalRecyclerViewFragment extends Fragment {
 
         }
 
-
         private void bind(Goal mGoal) {
             goal = mGoal;
             successfulCheckBox.setChecked(goal.isSuccessful());
@@ -161,7 +160,6 @@ public class GoalRecyclerViewFragment extends Fragment {
         public void onBindViewHolder(GoalHolder holder, int position) {
             Goal goal = goals.get(position);
             holder.bind(goal);
-
         }
 
         @Override
