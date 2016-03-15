@@ -54,6 +54,7 @@ public class GoalDetailViewFragment extends Fragment {
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
+
         inflater.inflate(R.menu.goal_detail_view_fragment,menu);
     }
 
@@ -71,6 +72,7 @@ public class GoalDetailViewFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
+
 
         GoalDatabase goalDatabase = GoalDatabase.newInstance(getActivity());
         uuid = (UUID)getArguments().getSerializable(UUID);
@@ -97,6 +99,7 @@ public class GoalDetailViewFragment extends Fragment {
         titleEditText.setText(goal.getTitle());
         descriptionEditText.setText(goal.getDescription());
         successfulCheckBox.setChecked(goal.isSuccessful());
+
 
 
         titleEditText.addTextChangedListener(new TextWatcher() {
