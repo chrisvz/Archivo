@@ -19,8 +19,8 @@ public class Goal {
         uuid = UUID.randomUUID();
     }
 
-    public Goal(){
-        uuid = UUID.randomUUID();
+    public Goal(UUID uuid){
+        this.uuid = UUID.randomUUID();
     }
 
     public void setTitle(String title) {

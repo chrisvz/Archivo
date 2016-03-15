@@ -77,4 +77,6 @@ public class GoalDatabase {
         ContentValues contentValues = contentValues(g);
         mDatabase.update(GoalBase.NAME, contentValues , GoalBase.COLS.UUID+" = ?",new String[]{ uuid});
     }
+
+
 }
