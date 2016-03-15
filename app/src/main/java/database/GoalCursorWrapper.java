@@ -23,10 +23,10 @@ public class GoalCursorWrapper extends CursorWrapper {
     }
 
     public Goal getGoal() {
-        String uuid = getString(getColumnIndex(GoalBase.COLS.UUID));
-        String title = getString(getColumnIndex(GoalBase.COLS.TITLE));
-        String description = getString(getColumnIndex(GoalBase.COLS.DESCRIPTION));
-        int successful = getInt(getColumnIndex(GoalBase.COLS.SUCCESSFUL));
+        String uuid = getString(getColumnIndex(GoalTable.Cols.UUID));
+        String title = getString(getColumnIndex(GoalTable.Cols.TITLE));
+        String description = getString(getColumnIndex(GoalTable.Cols.DESCRIPTION));
+        int successful = getInt(getColumnIndex(GoalTable.Cols.SUCCESSFUL));
 
         Goal g = new Goal(UUID.fromString(uuid));
         g.setTitle(title);

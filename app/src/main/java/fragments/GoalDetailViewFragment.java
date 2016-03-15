@@ -1,25 +1,29 @@
 package fragments;
 
-import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.text.Editable;
-import android.text.TextWatcher;
-import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
-import android.widget.EditText;
 
-import java.util.UUID;
 
-import achivo.com.achivo.R;
-import database.GoalDatabase;
-import model.Goal;
+
+        import android.os.Bundle;
+        import android.support.annotation.Nullable;
+        import android.support.v4.app.Fragment;
+        import android.text.Editable;
+        import android.text.TextWatcher;
+        import android.view.LayoutInflater;
+        import android.view.Menu;
+        import android.view.MenuInflater;
+        import android.view.MenuItem;
+        import android.view.View;
+        import android.view.ViewGroup;
+        import android.widget.CheckBox;
+        import android.widget.CompoundButton;
+        import android.widget.EditText;
+
+        import java.util.UUID;
+
+        import achivo.com.achivo.R;
+        import database.GoalDatabase;
+        import model.Goal;
 
 /**
  * Created by Chris on 2/29/2016.
@@ -39,8 +43,9 @@ public class GoalDetailViewFragment extends Fragment {
 
         switch(item.getItemId()) {
             case R.id.menu_item_delete_goal:
-                GoalDatabase goalDatabase = GoalDatabase.newInstance(getActivity());
-                goalDatabase.delete(goal);
+                GoalDatabase goalDatabase = GoalDatabase.newInstance(getContext());
+                goalDatabase.deleteGoal(goal);
+
                 getActivity().finish();
         }
         return super.onOptionsItemSelected(item);
@@ -69,8 +74,13 @@ public class GoalDetailViewFragment extends Fragment {
 
         GoalDatabase goalDatabase = GoalDatabase.newInstance(getActivity());
         uuid = (UUID)getArguments().getSerializable(UUID);
-        goal = goalDatabase.findGoal(uuid);
+        goal = goalDatabase.getGoal(uuid);
 
+    }
+
+    public void onPause() {
+        super.onPause();
+        GoalDatabase.newInstance(getActivity()).updateGoal(goal);
     }
 
     @Nullable
@@ -88,7 +98,7 @@ public class GoalDetailViewFragment extends Fragment {
         descriptionEditText.setText(goal.getDescription());
         successfulCheckBox.setChecked(goal.isSuccessful());
 
-        
+
         titleEditText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -125,11 +135,10 @@ public class GoalDetailViewFragment extends Fragment {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 goal.setSuccessful(isChecked);
+
             }
         });
 
         return v;
     }
-
-
 }

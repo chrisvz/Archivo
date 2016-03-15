@@ -12,15 +12,11 @@ public class Goal {
     private String description;
     private boolean successful;
 
-    public Goal(String title,String description,boolean successful) {
-        this.title  = title;
-        this.description = description;
-        this.successful = successful;
-        uuid = UUID.randomUUID();
+    public Goal() {
+        this(UUID.randomUUID());
     }
-
-    public Goal(UUID uuid){
-        this.uuid = UUID.randomUUID();
+    public Goal(UUID uuid) {
+        this.uuid = uuid;
     }
 
     public void setTitle(String title) {

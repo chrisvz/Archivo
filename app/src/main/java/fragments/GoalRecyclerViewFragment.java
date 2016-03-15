@@ -76,8 +76,15 @@ public class GoalRecyclerViewFragment extends Fragment {
     private void updateUI() {
         GoalDatabase goalDatabase = GoalDatabase.newInstance(getActivity());
         ArrayList<Goal> goals = goalDatabase.getGoals();
-        goalAdapter = new GoalAdapter(goals);
-        recyclerView.setAdapter(goalAdapter);
+        if(goalAdapter == null) {
+            goalAdapter = new GoalAdapter(goals);
+            recyclerView.setAdapter(goalAdapter);
+        }
+        else{
+
+            goalAdapter.setGoals(GoalDatabase.newInstance(getActivity()).getGoals());
+            goalAdapter.notifyDataSetChanged();
+        }
     }
 
     @Override
@@ -86,6 +93,8 @@ public class GoalRecyclerViewFragment extends Fragment {
 
 
         if(goalAdapter != null)
+
+        goalAdapter.setGoals(GoalDatabase.newInstance(getActivity()).getGoals());
         goalAdapter.notifyDataSetChanged();
 
     }
@@ -112,6 +121,9 @@ public class GoalRecyclerViewFragment extends Fragment {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                     goal.setSuccessful(isChecked);
+                    GoalDatabase g = GoalDatabase.newInstance(getActivity());
+                    g.updateGoal(goal);
+
                 }
             });
 
@@ -155,6 +167,10 @@ public class GoalRecyclerViewFragment extends Fragment {
         @Override
         public int getItemCount() {
             return goals.size();
+        }
+
+        public void setGoals(ArrayList<Goal> list){
+            this.goals = list;
         }
     }
 }

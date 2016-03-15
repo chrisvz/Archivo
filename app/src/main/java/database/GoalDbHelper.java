@@ -20,13 +20,13 @@ public class GoalDbHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL("create table "+ GoalBase.NAME +" ("+
+        db.execSQL("create table "+ GoalTable.NAME +" ("+
                         "_id integer primary key autoincrement, "+
 
-                        GoalBase.COLS.UUID           +", "+
-                        GoalBase.COLS.TITLE          +", "+
-                        GoalBase.COLS.DESCRIPTION    +", "+
-                        GoalBase.COLS.SUCCESSFUL     +" )"
+                        GoalTable.Cols.UUID           +", "+
+                        GoalTable.Cols.TITLE          +", "+
+                        GoalTable.Cols.DESCRIPTION    +", "+
+                        GoalTable.Cols.SUCCESSFUL     +" )"
 
         );
 
