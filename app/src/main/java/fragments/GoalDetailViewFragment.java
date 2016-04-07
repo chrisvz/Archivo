@@ -1,8 +1,7 @@
 package fragments;
 
+import android.content.Context;
 import android.text.Editable;
-
-
 
         import android.os.Bundle;
         import android.support.annotation.Nullable;
@@ -37,6 +36,24 @@ public class GoalDetailViewFragment extends Fragment {
     private EditText titleEditText;
     private EditText descriptionEditText;
     private CheckBox successfulCheckBox;
+
+    private Callbacks mCallbacks;
+
+    public interface Callbacks {
+        public void onGoalUpdate(Goal goal);
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        mCallbacks = (Callbacks) context;
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        mCallbacks = null;
+    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -80,9 +97,14 @@ public class GoalDetailViewFragment extends Fragment {
 
     }
 
+    public void update() {
+        GoalDatabase.newInstance(getActivity()).updateGoal(goal);
+        mCallbacks.onGoalUpdate(goal);
+    }
+
     public void onPause() {
         super.onPause();
-        GoalDatabase.newInstance(getActivity()).updateGoal(goal);
+        update();
     }
 
     @Nullable
@@ -110,6 +132,7 @@ public class GoalDetailViewFragment extends Fragment {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 goal.setTitle(titleEditText.getText().toString());
+                update();
             }
 
             @Override
@@ -127,6 +150,7 @@ public class GoalDetailViewFragment extends Fragment {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 goal.setDescription(descriptionEditText.getText().toString());
+                update();
             }
             @Override
             public void afterTextChanged(Editable s) {
@@ -138,6 +162,7 @@ public class GoalDetailViewFragment extends Fragment {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 goal.setSuccessful(isChecked);
+                update();
 
             }
         });

@@ -1,5 +1,7 @@
 package fragments;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -17,6 +19,8 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
+import javax.security.auth.callback.Callback;
+
 import achivo.com.achivo.GoalDetailViewActivity;
 import achivo.com.achivo.GoalViewPagerActivity;
 import achivo.com.achivo.R;
@@ -30,6 +34,25 @@ public class GoalRecyclerViewFragment extends Fragment {
 
     private RecyclerView recyclerView;
     private GoalAdapter goalAdapter;
+    private Callbacks mCallBacks;
+
+
+    public interface Callbacks {
+        public void onGoalSelected(Goal goal);
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        mCallBacks  = (Callbacks) context;
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        mCallBacks = null;
+    }
+
 
 
     @Override
@@ -73,7 +96,7 @@ public class GoalRecyclerViewFragment extends Fragment {
         return v;
     }
 
-    private void updateUI() {
+    public void updateUI() {
         GoalDatabase goalDatabase = GoalDatabase.newInstance(getActivity());
         ArrayList<Goal> goals = goalDatabase.getGoals();
         if(goalAdapter == null) {
@@ -137,8 +160,7 @@ public class GoalRecyclerViewFragment extends Fragment {
 
         @Override
         public void onClick(View v) {
-            Intent intent = GoalViewPagerActivity.getIntent(goal.getUuid(), getActivity());
-            startActivity(intent);
+           mCallBacks.onGoalSelected(goal);
         }
     }
 

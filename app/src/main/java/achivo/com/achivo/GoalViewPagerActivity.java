@@ -20,7 +20,7 @@ import model.Goal;
 /**
  * Created by Chris on 3/1/2016.
  */
-public class GoalViewPagerActivity extends AppCompatActivity{
+public class GoalViewPagerActivity extends AppCompatActivity implements GoalDetailViewFragment.Callbacks{
 
     private static final String UUID = "UUID";
     private UUID uuid;
@@ -64,5 +64,10 @@ public class GoalViewPagerActivity extends AppCompatActivity{
                 viewPager.setCurrentItem(i);
             }
         }
+    }
+
+    @Override
+    public void onGoalUpdate(Goal goal) {
+
     }
 }
