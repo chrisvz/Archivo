@@ -54,7 +54,6 @@ public class GoalRecyclerViewFragment extends Fragment {
     }
 
 
-
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
@@ -117,8 +116,7 @@ public class GoalRecyclerViewFragment extends Fragment {
 
         if(goalAdapter != null)
 
-        goalAdapter.setGoals(GoalDatabase.newInstance(getActivity()).getGoals());
-        goalAdapter.notifyDataSetChanged();
+        updateUI();
 
     }
 
