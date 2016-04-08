@@ -42,4 +42,15 @@ public class GoalRecyclerViewActivity extends SingleFragmentActivity implements 
         GoalRecyclerViewFragment goalRecyclerViewFragment = ( GoalRecyclerViewFragment)getSupportFragmentManager().findFragmentById(R.id.fragment_container);
         goalRecyclerViewFragment.updateUI();
     }
+
+    @Override
+    public void finishActivityIfNotTablet() {
+        Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.fragment_container);
+
+        // if its not a tablet
+        if (fragment == null) {
+            fragment.getActivity().finish();
+        }
+
+    }
 }

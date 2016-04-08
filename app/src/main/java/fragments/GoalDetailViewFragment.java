@@ -39,8 +39,14 @@ public class GoalDetailViewFragment extends Fragment {
 
     private Callbacks mCallbacks;
 
-    public interface Callbacks {
-        public void onGoalUpdate(Goal goal);
+    public static GoalDetailViewFragment newInstance(UUID uuid) {
+
+        Bundle bundle = new Bundle();
+        bundle.putSerializable(UUID, uuid);
+
+        GoalDetailViewFragment goalDetailViewFragment = new GoalDetailViewFragment();
+        goalDetailViewFragment.setArguments(bundle);
+        return goalDetailViewFragment;
     }
 
     @Override
@@ -62,8 +68,9 @@ public class GoalDetailViewFragment extends Fragment {
             case R.id.menu_item_delete_goal:
                 GoalDatabase goalDatabase = GoalDatabase.newInstance(getContext());
                 goalDatabase.deleteGoal(goal);
-
-                getActivity().finish();
+                mCallbacks.finishActivityIfNotTablet();
+                resetAllViews();
+                update();
         }
         return super.onOptionsItemSelected(item);
     }
@@ -75,21 +82,10 @@ public class GoalDetailViewFragment extends Fragment {
         inflater.inflate(R.menu.goal_detail_view_fragment,menu);
     }
 
-    public static GoalDetailViewFragment newInstance(UUID uuid) {
-
-        Bundle bundle = new Bundle();
-        bundle.putSerializable(UUID, uuid);
-
-        GoalDetailViewFragment goalDetailViewFragment = new GoalDetailViewFragment();
-        goalDetailViewFragment.setArguments(bundle);
-        return goalDetailViewFragment;
-    }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
-
 
         GoalDatabase goalDatabase = GoalDatabase.newInstance(getActivity());
         uuid = (UUID)getArguments().getSerializable(UUID);
@@ -118,8 +114,11 @@ public class GoalDetailViewFragment extends Fragment {
         successfulCheckBox = (CheckBox)v.findViewById(R.id.successful_checkBox_detail);
 
 
+        if(titleEditText != null)
         titleEditText.setText(goal.getTitle());
+        if(descriptionEditText !=null)
         descriptionEditText.setText(goal.getDescription());
+        if(successfulCheckBox!= null)
         successfulCheckBox.setChecked(goal.isSuccessful());
 
 
@@ -168,5 +167,17 @@ public class GoalDetailViewFragment extends Fragment {
         });
 
         return v;
+    }
+
+    private void resetAllViews() {
+            titleEditText.setText(null);
+            descriptionEditText.setText(null);
+            successfulCheckBox.setChecked(false);
+    }
+
+    public interface Callbacks {
+        public void onGoalUpdate(Goal goal);
+
+        public void  finishActivityIfNotTablet() ;
     }
 }

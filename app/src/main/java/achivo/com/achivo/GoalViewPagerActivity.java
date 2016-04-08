@@ -70,4 +70,9 @@ public class GoalViewPagerActivity extends AppCompatActivity implements GoalDeta
     public void onGoalUpdate(Goal goal) {
 
     }
+
+    @Override
+    public void finishActivityIfNotTablet() {
+
+    }
 }
