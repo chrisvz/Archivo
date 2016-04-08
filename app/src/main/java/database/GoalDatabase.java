@@ -69,7 +69,6 @@ public class GoalDatabase {
     public void deleteGoal(Goal goal) {
 
         String uuid = goal.getUuid().toString();
-        ContentValues contentValues = getContentValues(goal);
         sqLiteDatabase.delete( GoalTable.NAME, GoalTable.Cols.UUID + " = ?", new String[]{uuid});
     }
 
