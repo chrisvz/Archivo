@@ -68,8 +68,9 @@ public class GoalRecyclerViewFragment extends Fragment {
                 GoalDatabase goalDatabase = GoalDatabase.newInstance(getActivity());
                 Goal goal = new Goal();
                 goalDatabase.addGoal(goal);
-                Intent intent = GoalViewPagerActivity.getIntent(goal.getUuid(), getActivity());
-                startActivity(intent);
+
+                mCallBacks.onGoalSelected(goal);
+
                 return true;
 
             default:
