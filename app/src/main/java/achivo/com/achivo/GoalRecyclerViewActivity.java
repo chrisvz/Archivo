@@ -38,6 +38,21 @@ public class GoalRecyclerViewActivity extends SingleFragmentActivity implements 
     }
 
     @Override
+    public void onCheckBoxChecked(Goal goal) {
+        GoalDetailViewFragment fragment = (GoalDetailViewFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_detail_view);
+        if (fragment != null) {
+            // DO NOT UPDATE , recyclerview is binding the viewholder
+            if (fragment.getGoalUuid() == null) {
+
+                // UPDATE the GoalDetailViewFragment
+            } else
+
+            fragment.updateFromDatabase(goal);
+        }
+
+    }
+
+    @Override
     public void onGoalUpdate(Goal goal) {
         GoalRecyclerViewFragment goalRecyclerViewFragment = ( GoalRecyclerViewFragment)getSupportFragmentManager().findFragmentById(R.id.fragment_container);
         goalRecyclerViewFragment.updateUI();

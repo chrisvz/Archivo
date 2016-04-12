@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -39,6 +40,8 @@ public class GoalRecyclerViewFragment extends Fragment {
 
     public interface Callbacks {
         public void onGoalSelected(Goal goal);
+
+        public void onCheckBoxChecked(Goal goal);
     }
 
     @Override
@@ -104,8 +107,9 @@ public class GoalRecyclerViewFragment extends Fragment {
             recyclerView.setAdapter(goalAdapter);
         }
         else{
-
+            // receive any updates from the database
             goalAdapter.setGoals(GoalDatabase.newInstance(getActivity()).getGoals());
+            // notify the adapter for the changes
             goalAdapter.notifyDataSetChanged();
         }
     }
@@ -130,6 +134,7 @@ public class GoalRecyclerViewFragment extends Fragment {
         private CheckBox successfulCheckBox;
         private TextView titleTextView;
         private Goal goal;
+        private boolean onBind;
 
 
         public GoalHolder(View itemView) {
@@ -143,18 +148,28 @@ public class GoalRecyclerViewFragment extends Fragment {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                     goal.setSuccessful(isChecked);
-                    GoalDatabase g = GoalDatabase.newInstance(getActivity());
-                    g.updateGoal(goal);
 
+                    GoalDatabase database = GoalDatabase.newInstance(getActivity());
+                    database.updateGoal(goal);
+
+                    // check if binding for the GoalHolder has finished
+                    if(!onBind) {
+                        // update the GoalDetailViewFragment
+                        mCallBacks.onCheckBoxChecked(goal);
+
+                    }
                 }
             });
-
         }
 
         private void bind(Goal mGoal) {
+            onBind = true;
+
             goal = mGoal;
             successfulCheckBox.setChecked(goal.isSuccessful());
             titleTextView.setText(goal.getTitle());
+
+            onBind = false;
         }
 
         @Override

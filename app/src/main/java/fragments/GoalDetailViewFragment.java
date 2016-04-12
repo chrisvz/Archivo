@@ -8,7 +8,8 @@ import android.text.Editable;
         import android.support.v4.app.Fragment;
         import android.text.Editable;
         import android.text.TextWatcher;
-        import android.view.LayoutInflater;
+import android.util.Log;
+import android.view.LayoutInflater;
         import android.view.Menu;
         import android.view.MenuInflater;
         import android.view.MenuItem;
@@ -38,6 +39,8 @@ public class GoalDetailViewFragment extends Fragment {
     private CheckBox successfulCheckBox;
 
     private Callbacks mCallbacks;
+    private CompoundButton.OnCheckedChangeListener checkBoxListener ;
+
 
     public static GoalDetailViewFragment newInstance(UUID uuid) {
 
@@ -94,7 +97,9 @@ public class GoalDetailViewFragment extends Fragment {
     }
 
     public void update() {
+        // updates the database
         GoalDatabase.newInstance(getActivity()).updateGoal(goal);
+        // updates the recycler view
         mCallbacks.onGoalUpdate(goal);
     }
 
@@ -114,11 +119,11 @@ public class GoalDetailViewFragment extends Fragment {
         successfulCheckBox = (CheckBox)v.findViewById(R.id.successful_checkBox_detail);
 
 
-        if(titleEditText != null)
+
         titleEditText.setText(goal.getTitle());
-        if(descriptionEditText !=null)
+
         descriptionEditText.setText(goal.getDescription());
-        if(successfulCheckBox!= null)
+
         successfulCheckBox.setChecked(goal.isSuccessful());
 
 
@@ -157,14 +162,15 @@ public class GoalDetailViewFragment extends Fragment {
             }
         });
 
-        successfulCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        checkBoxListener = new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 goal.setSuccessful(isChecked);
                 update();
-
             }
-        });
+        };
+
+        successfulCheckBox.setOnCheckedChangeListener(checkBoxListener);
 
         return v;
     }
@@ -174,6 +180,35 @@ public class GoalDetailViewFragment extends Fragment {
             descriptionEditText.setText(null);
             successfulCheckBox.setChecked(false);
     }
+
+    private void setAllViews(boolean success,String title,String description) {
+        successfulCheckBox.setChecked(goal.isSuccessful());
+        titleEditText.setText(goal.getTitle());
+        descriptionEditText.setText(goal.getDescription());
+    }
+
+    public void updateFromDatabase(Goal goal) {
+        //  the goal received from the recyclerView
+        this.goal = goal;
+
+        // Remove the listener because we do not want to update the RecyclerView
+        if(successfulCheckBox != null) {
+            successfulCheckBox.setOnCheckedChangeListener(null);
+
+            // Change the values of the views
+            setAllViews(goal.isSuccessful(),goal.getTitle(),goal.getDescription());
+
+            // set listener back
+            successfulCheckBox.setOnCheckedChangeListener(checkBoxListener);
+
+        }
+    }
+
+
+    public UUID getGoalUuid() {
+        return goal.getUuid();
+    }
+
 
     public interface Callbacks {
         public void onGoalUpdate(Goal goal);
